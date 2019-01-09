@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
-import FeaturedWines from '../client/components/FeaturedWines'
+import FeaturedWines from './components/FeaturedWines'
 
 /**
  * COMPONENT
@@ -29,9 +29,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback
-        <Route component={Login} />
-        */}
+        <Route exact path="/" component={FeaturedWines} />
       </Switch>
     )
   }
