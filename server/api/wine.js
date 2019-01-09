@@ -17,3 +17,12 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/allWines', async (req, res, next) => {
+  try {
+    const allWines = await Wine.findAll()
+    res.json(allWines)
+  } catch (err) {
+    next(err)
+  }
+})
