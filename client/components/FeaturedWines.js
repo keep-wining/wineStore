@@ -3,18 +3,23 @@ import {connect} from 'react-redux'
 import {thunk_gotFeaturedWines} from '../store/wine'
 
 class FeaturedWines extends React.Component {
-  componentDidMount() {
-    this.props.getFeaturedWines()
+  async componentDidMount() {
+    await this.props.getFeaturedWines()
   }
 
   render() {
     const featuredWines = this.props.featuredWines
+    if (!featuredWines) {
+      return <div>....loading</div>
+    }
+
     return (
       <div>
         {featuredWines.map(wine => {
           return (
             <ul key={wine.id}>
               <li>{wine.brand}</li>
+              <img src={wine.imageURL} />
               <li>{wine.price}</li>
               <li>{wine.description}</li>
               <li>{wine.vintage}</li>
@@ -28,7 +33,7 @@ class FeaturedWines extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    featuredWines: state.featuredWines
+    featuredWines: state.wineReducer.featuredWines
   }
 }
 
