@@ -3,7 +3,10 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SingleWine} from './components'
+import ConnectedAllWines from './components/AllWines'
+
 import {me} from './store'
+import FeaturedWines from './components/FeaturedWines'
 
 /**
  * COMPONENT
@@ -18,19 +21,20 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/wines/:wineId" component={SingleWine} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        {/* Routes placed here are available to all visitors who are not logged in */}
+        <Route exact path="/wines/allWines" component={ConnectedAllWines} />
+        <Route exact path="/wines/:wineId" component={SingleWine} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/" component={FeaturedWines} />
 
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route exact path="/wines/allWines" component={ConnectedAllWines} />
+            <Route exact path="/home" component={UserHome} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
       </Switch>
     )
   }
