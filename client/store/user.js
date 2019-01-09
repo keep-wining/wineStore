@@ -46,6 +46,34 @@ export const auth = (email, password, method) => async dispatch => {
   }
 }
 
+//firstName,lastName,zip,city,address1,address2,state
+export const authNewAccount = function(inputs) {
+  return async dispatch => {
+    let res
+    try {
+      res = await axios.post(`/auth/${inputs.formName}`, {
+        email: inputs.email,
+        password: inputs.password,
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        zip: inputs.zip,
+        city: inputs.city,
+        address1: inputs.address1,
+        address2: inputs.address2,
+        state: inputs.state
+      })
+    } catch (authError) {
+      return dispatch(getUser({error: authError}))
+    }
+    try {
+      dispatch(getUser(res.data))
+      history.push('/home')
+    } catch (dispatchOrHistoryErr) {
+      console.error(dispatchOrHistoryErr)
+    }
+  }
+}
+
 export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
