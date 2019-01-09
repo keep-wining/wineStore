@@ -4,7 +4,6 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SingleWine} from './components'
 import ConnectedAllWines from './components/AllWines'
-
 import {me} from './store'
 import FeaturedWines from './components/FeaturedWines'
 

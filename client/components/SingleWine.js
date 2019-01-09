@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {thunk_gotSingleWine} from '../store/wine'
-import {withRouter, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class SingleWine extends React.Component {
   async componentDidMount() {
-    const wineId = this.props.location.pathname.slice(7)
+    const wineId = this.props.match.params.wineId
     await this.props.getSingleWine(wineId)
   }
 
@@ -56,8 +56,8 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const ConnectedSingleWine = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleWine)
+const ConnectedSingleWine = connect(mapStateToProps, mapDispatchToProps)(
+  SingleWine
 )
 
 export default ConnectedSingleWine
