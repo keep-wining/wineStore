@@ -1,6 +1,4 @@
 import axios from 'axios'
-import history from '../history'
-import {runInNewContext} from 'vm'
 
 // ACTION TYPES
 const GET_FEATURED_WINES = 'GET_FEATURED_WINES'
