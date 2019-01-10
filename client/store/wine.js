@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 // ACTION TYPES
 const GET_FEATURED_WINES = 'GET_FEATURED_WINES'
@@ -14,7 +13,6 @@ const getFeaturedWines = wines => ({
   wines
 })
 
-
 const getSingleWine = wine => ({
   type: GET_SINGLE_WINE,
   wine
@@ -23,7 +21,6 @@ const getSingleWine = wine => ({
 const getAllWines = allWines => ({
   type: GET_ALL_WINES,
   allWines
-
 })
 
 // THUNK CREATORS
@@ -37,7 +34,6 @@ export const thunk_gotFeaturedWines = () => async dispatch => {
   }
 }
 
-
 export const thunk_gotSingleWine = wineId => {
   return async dispatch => {
     const response = await axios.get(`/api/wines/${wineId}`)
@@ -50,7 +46,6 @@ export const thunk_gotAllWines = () => {
     const response = await axios.get('/api/wines/allWines')
     const action = getAllWines(response.data)
     dispatch(action)
-
   }
 }
 
@@ -58,7 +53,7 @@ export const thunk_gotAllWines = () => {
 const initialState = {
   featuredWines: [],
   singleWine: {},
-  AllWines: [],
+  AllWines: []
 }
 
 // WINE SUB-REDUCER
