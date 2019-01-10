@@ -32,7 +32,7 @@ class SingleWine extends React.Component {
         <img src={imageURL} />
         <h4>Qty:</h4>
         <input type="number" min="1" max="100" value="1" />
-        <button>Add to Cart</button>
+        <button type="button">Add to Cart</button>
         <p>Description: {description}</p>
         <p>On sale! {price}</p>
         <h3>Browse our complete list of wines:</h3>
