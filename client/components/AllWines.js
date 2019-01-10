@@ -26,7 +26,7 @@ class AllWines extends React.Component {
               <img src={wine.imageURL} />
             </Link>
             <div>${wine.price}</div>
-            <button type="button">Click to view/order</button>
+            <button type="submit">Click to view/order</button>
           </div>
         ))}
       </div>
