@@ -3,6 +3,8 @@ const {Wine} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
+// OB/LM: could combine two routes below into one route, and use the query string for feature or not, e.g. instead of GET /api/wines/, do GET /api/wines?featured=trued, then access that via `req.query` (i.e. that will be `{featured: true}`)
+
 router.get('/', async (req, res, next) => {
   try {
     const featuredWine = await Wine.findAll({

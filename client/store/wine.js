@@ -18,6 +18,7 @@ export const thunk_gotFeaturedWines = () => async dispatch => {
     const {data} = await axios.get('/api/wines')
     dispatch(getFeaturedWines(data))
   } catch (err) {
+    // OB/LM: good that you're thinking about error handling, go further, report the error to the end user, such as a "toast" notification (e.g. check out react toastr: https://tomchentw.github.io/react-toastr/)
     console.error(err)
   }
 }
