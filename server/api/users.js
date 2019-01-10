@@ -4,9 +4,11 @@ module.exports = router
 
 router.put('/:userId/cart', async (req, res, next) => {
   try {
+    const oldcart = await User.findById(req.params.userId)
+    const newcart = [...oldcart.cart, req.body]
     await User.update(
       {
-        cart: [req.body]
+        cart: newcart
       },
       {
         where: {
