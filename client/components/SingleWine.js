@@ -36,7 +36,7 @@ class SingleWine extends React.Component {
         <p>Description: {description}</p>
         <p>On sale! {price}</p>
         <h3>Browse our complete list of wines:</h3>
-        <Link to="/wines">View All Wines</Link>
+        <Link to="/wines/allWines">View All Wines</Link>
       </div>
     )
   }
