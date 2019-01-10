@@ -2,7 +2,14 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, UserHome, SingleWine, AllWines, NewAccount} from './components'
+import {
+  Login,
+  UserHome,
+  SingleWine,
+  AllWines,
+  NewAccount,
+  Checkout
+} from './components'
 
 import {me} from './store'
 import FeaturedWines from './components/FeaturedWines'
@@ -25,12 +32,14 @@ class Routes extends Component {
         <Route exact path="/wines/:wineId" component={SingleWine} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={NewAccount} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/" component={FeaturedWines} />
 
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/wines/allWines" component={AllWines} />
+            <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/home" component={UserHome} />
           </Switch>
         )}
