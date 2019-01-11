@@ -16,6 +16,7 @@ import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import withStyles from '@material-ui/core/styles/withStyles'
+import toastr from 'toastr'
 
 const styles = theme => ({
   main: {
@@ -64,6 +65,9 @@ class Login extends React.Component {
 
   render() {
     const {name, displayName, error, classes} = this.props
+    if (error) {
+      toastr.error('unSuccessful login')
+    }
     return (
       <main className={classes.main}>
         <CssBaseline />
@@ -117,13 +121,13 @@ const mapLogin = state => {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
     loginAttempt: evt => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      dispatch(auth(email, password, formName, ownProps.history))
     }
   }
 }
