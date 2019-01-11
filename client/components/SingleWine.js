@@ -3,6 +3,61 @@ import {connect} from 'react-redux'
 import {thunk_gotSingleWine} from '../store/wine'
 import {Link} from 'react-router-dom'
 import {thunk_addToCart} from '../store/user'
+import PropTypes from 'prop-types'
+import AppBar from '@material-ui/core/AppBar'
+import Button from '@material-ui/core/Button'
+import CameraIcon from '@material-ui/icons/PhotoCamera'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Grid from '@material-ui/core/Grid'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import {withStyles} from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import ButtonBase from '@material-ui/core/ButtonBase'
+import InputBase from '@material-ui/core/InputBase'
+import Input from '@material-ui/core/Input'
+
+const styles = theme => ({
+  appBar: {
+    position: 'relative'
+  },
+  icon: {
+    marginRight: theme.spacing.unit * 2
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
+      width: 1800,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  },
+
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing.unit * 6
+  },
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    margin: 'auto',
+    maxWidth: 800
+  },
+  image: {
+    width: 140,
+    height: 180
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%'
+  }
+})
 
 class SingleWine extends React.Component {
   constructor() {
@@ -44,6 +99,7 @@ class SingleWine extends React.Component {
   }
 
   render() {
+    const {classes} = this.props
     const singleWine = this.props.singleWine
     if (!singleWine) {
       return <div>....loading</div>
@@ -59,28 +115,83 @@ class SingleWine extends React.Component {
     } = this.props.singleWine
 
     return (
-      <div>
-        <h1>{brand}</h1>
-        <h3>{varietal}</h3>
-        <h3>{vintage}</h3>
-        <img src={imageURL} />
-        <h4>Qty:</h4>
-        <input
-          type="number"
-          min="1"
-          max="100"
-          name="quantity"
-          value={this.state.quantity}
-          onChange={this.handChange}
-        />
-        <button type="submit" onClick={this.handleClick}>
-          Add to Cart
-        </button>
-        <p>Description: {description}</p>
-        <p>On sale! {price}</p>
-        <h3>Browse our complete list of wines:</h3>
-        <Link to="/wines/allWines">View All Wines</Link>
-      </div>
+      <React.Fragment>
+        <div>
+          <CssBaseline />
+          {/* <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <CameraIcon className={classes.icon} />
+            <Typography variant="h6" color="inherit" noWrap>
+              Wine Store
+            </Typography>
+          </Toolbar>
+        </AppBar> */}
+          <div className={classes.root}>
+            <Paper className={classes.paper}>
+              <Grid container spacing={16}>
+                <Grid item>
+                  <ButtonBase className={classes.image}>
+                    <img className={classes.img} alt="complex" src={imageURL} />
+                  </ButtonBase>
+                </Grid>
+                <Grid item xs={12} sm container>
+                  <Grid item xs container direction="column" spacing={16}>
+                    <Grid item xs>
+                      <Typography gutterBottom variant="subtitle1">
+                        {brand} {vintage}
+                      </Typography>
+                      <Typography gutterBottom>{varietal}</Typography>
+                      <Typography color="textSecondary">
+                        {description}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography style={{cursor: 'pointer'}}>
+                        <input
+                          type="number"
+                          min="1"
+                          max="100"
+                          name="quantity"
+                          value={this.state.quantity}
+                          onChange={this.handChange}
+                        />
+                        <Button
+                          type="submit"
+                          onClick={this.handleClick}
+                          size="small"
+                          color="primary"
+                        >
+                          Add to Cart
+                        </Button>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="subtitle1">${price}</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Paper>
+          </div>
+        </div>
+        <div>
+          <footer className={classes.footer}>
+            <Typography variant="h6" align="center" gutterBottom>
+              Browse our complete list of wines:
+            </Typography>
+            <Link to="/wines/allWines">
+              <Typography
+                variant="subtitle1"
+                align="center"
+                color="textSecondary"
+                component="p"
+              >
+                View All Wines
+              </Typography>
+            </Link>
+          </footer>
+        </div>
+      </React.Fragment>
     )
   }
 }
@@ -103,8 +214,12 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
+SingleWine.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
 const ConnectedSingleWine = connect(mapStateToProps, mapDispatchToProps)(
-  SingleWine
+  withStyles(styles)(SingleWine)
 )
 
 export default ConnectedSingleWine
