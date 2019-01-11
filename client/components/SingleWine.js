@@ -14,7 +14,7 @@ class SingleWine extends React.Component {
       description: '',
       price: '',
       id: 0,
-      quantity: 0
+      quantity: 1
     }
     this.handleClick = this.handleClick.bind(this)
     this.handChange = this.handChange.bind(this)
@@ -35,7 +35,6 @@ class SingleWine extends React.Component {
   handleClick(evt) {
     evt.preventDefault()
     this.props.addToCart(this.props.user, this.state)
-    console.log(this.state)
   }
 
   handChange(evt) {
@@ -71,6 +70,7 @@ class SingleWine extends React.Component {
           min="1"
           max="100"
           name="quantity"
+          value={this.state.quantity}
           onChange={this.handChange}
         />
         <button type="submit" onClick={this.handleClick}>
