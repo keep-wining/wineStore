@@ -6,21 +6,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Grid from '@material-ui/core/Grid'
+import {connect} from 'react-redux'
 
-const products = [
-  {name: 'Product 1', desc: 'A nice thing', price: '$9.99'},
-  {name: 'Product 2', desc: 'Another thing', price: '$3.45'},
-  {name: 'Product 3', desc: 'Something else', price: '$6.51'},
-  {name: 'Product 4', desc: 'Best thing of all', price: '$14.11'},
-  {name: 'Shipping', desc: '', price: 'Free'}
-]
-const addresses = [
-  '1 Material-UI Drive',
-  'Reactville',
-  'Anytown',
-  '99999',
-  'USA'
-]
 const payments = [
   {name: 'Card type', detail: 'Visa'},
   {name: 'Card holder', detail: 'Mr John Smith'},
@@ -41,23 +28,37 @@ const styles = theme => ({
 })
 
 function Review(props) {
+  const products = props.wine
+  const user = props.user
   const {classes} = props
+  const total = products.reduce((accum, elem) => {
+    accum = accum + elem.price * elem.quantity
+    return accum
+  }, 0)
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
-        ))}
+        {products.map(product => {
+          return (
+            <ListItem
+              className={classes.listItem}
+              key={product.id /* had .name*/}
+            >
+              <ListItemText
+                primary={`${product.brand} Quantity ${product.quantity}`}
+                secondary={product.varietal}
+              />
+              <Typography variant="body2">{`$${product.price}`}</Typography>
+            </ListItem>
+          )
+        })}
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            {'$' + total}
           </Typography>
         </ListItem>
       </List>
@@ -66,8 +67,14 @@ function Review(props) {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{`${user.firstName} ${
+            user.lastName
+          }`}</Typography>
+          <Typography gutterBottom>{`${user.address1}, ${user.address2}, ${
+            user.city
+          }, ${user.state}`
+          /* addresses.join(', ') */
+          }</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -95,4 +102,14 @@ Review.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Review)
+const mapStateToProps = state => {
+  return {
+    wine: state.userReducer.cart,
+    user: state.userReducer
+  }
+}
+
+const connectReview = connect(mapStateToProps, null)(withStyles(styles)(Review))
+
+export default connectReview
+//withStyles(styles)(Review)
