@@ -93,8 +93,16 @@ export const logout = () => async dispatch => {
 
 export const thunk_addToCart = (userId, item) => {
   return async dispatch => {
-    const response = await axios.put(`/api/users/${userId}/cart`, item)
-    const action = addToCart(response.data)
+    if (userId) {
+      item.quantity = item.quantity * 1
+      const response = await axios.put(`/api/users/${userId}/cart`, item)
+      const action = addToCart(response.data)
+      dispatch(action)
+    }
+    const action = addToCart({
+      type: ADD_TO_CART,
+      item
+    })
     dispatch(action)
   }
 }
@@ -109,7 +117,7 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case ADD_TO_CART:
-      return {...state, cart: action.item}
+      return {...state, cart: {...state.cart, test: 'blah'}}
     default:
       return state
   }
