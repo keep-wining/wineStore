@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import AddQuantity, {uniqueItems} from './HelperFunction'
 
 /**
  * ACTION TYPES
@@ -12,7 +13,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
  * INITIAL STATE
  */
 const defaultUser = {
-  cart: {}
+  cart: []
 }
 
 /**
@@ -98,12 +99,13 @@ export const thunk_addToCart = (userId, item) => {
       const response = await axios.put(`/api/users/${userId}/cart`, item)
       const action = addToCart(response.data)
       dispatch(action)
+    } else {
+      const action = addToCart({
+        type: ADD_TO_CART,
+        item
+      })
+      dispatch(action)
     }
-    const action = addToCart({
-      type: ADD_TO_CART,
-      item
-    })
-    dispatch(action)
   }
 }
 
@@ -117,7 +119,7 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case ADD_TO_CART:
-      return {...state, cart: {...state.cart, test: 'blah'}}
+      return {...state, cart: [action.item]}
     default:
       return state
   }
