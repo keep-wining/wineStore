@@ -10,7 +10,7 @@ const Order = db.define(
     price: {
       type: Sequelize.INTEGER
     }
-  },
+  }, // comment the schema: private line below to test
   {schema: 'private'}
 )
 

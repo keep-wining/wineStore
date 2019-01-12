@@ -62,10 +62,8 @@ const User = db.define(
       type: Sequelize.ARRAY(Sequelize.JSON),
       defaultValue: []
     }
-  },
-  {
-    schema: 'private'
-  }
+  }, // comment the schema: private line below to test
+  {schema: 'private'}
 )
 
 module.exports = User
