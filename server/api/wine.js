@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     const featuredWine = await Wine.findAll({
       where: {
         id: {
-          [Op.or]: [1, 2, 3, 4, 5]
+          [Op.or]: [1, 4, 13, 19]
         }
       }
     })
