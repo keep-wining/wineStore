@@ -6,10 +6,16 @@ const session = require('express-session')
 const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
+require('../secrets')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+// const keyPublishable = process.env.PUBLISHABLE_KEY;
+
+app.set('view engine', 'pug')
+app.use(require('body-parser').urlencoded({extended: false}))
+
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -67,6 +73,7 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+  app.use('/charge', require('./charge'))
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

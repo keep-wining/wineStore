@@ -10,6 +10,7 @@ const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_ERROR = 'REMOVE_ERROR'
+const CLEAR_CART = 'CLEAR_CART'
 
 /**
  * INITIAL STATE
@@ -28,6 +29,9 @@ const addToCart = item => ({
   item
 })
 const removeError = () => ({type: REMOVE_ERROR})
+const clearCart = () => ({
+  type: CLEAR_CART
+})
 
 /**
  * THUNK CREATORS
@@ -125,6 +129,14 @@ export const thunk_addToCart = (userId, item) => {
   }
 }
 
+export const thunk_sendToStripe = stripeData => {
+  return async dispatch => {
+    await axios.post('/charge', stripeData)
+    const action = clearCart()
+    dispatch(action)
+  }
+}
+
 export const thunk_removeError = () => dispatch => {
   dispatch(removeError())
 }
@@ -143,6 +155,8 @@ export default function(state = defaultUser, action) {
     case REMOVE_ERROR:
       delete state.error
       return state
+    case CLEAR_CART:
+      return {...state, cart: []}
     default:
       return state
   }
