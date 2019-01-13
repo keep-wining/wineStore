@@ -155,7 +155,7 @@ class SingleWine extends React.Component {
                           max="100"
                           name="quantity"
                           value={this.state.quantity}
-                          onChange={this.handChange}
+                          onChange={this.handleChange}
                         />
                         <Button
                           type="submit"
