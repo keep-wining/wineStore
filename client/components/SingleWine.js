@@ -58,6 +58,7 @@ const styles = theme => ({
     maxHeight: '100%'
   }
 })
+import toastr from 'toastr'
 
 class SingleWine extends React.Component {
   constructor() {
@@ -72,7 +73,7 @@ class SingleWine extends React.Component {
       quantity: 1
     }
     this.handleClick = this.handleClick.bind(this)
-    this.handChange = this.handChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   async componentDidMount() {
     const wineId = this.props.match.params.wineId
@@ -90,9 +91,10 @@ class SingleWine extends React.Component {
   handleClick(evt) {
     evt.preventDefault()
     this.props.addToCart(this.props.user, this.state)
+    toastr.success(`${this.state.quantity} ${this.state.brand} added to cart!`)
   }
 
-  handChange(evt) {
+  handleChange(evt) {
     this.setState({
       quantity: evt.target.value
     })
@@ -153,7 +155,7 @@ class SingleWine extends React.Component {
                           max="100"
                           name="quantity"
                           value={this.state.quantity}
-                          onChange={this.handChange}
+                          onChange={this.handleChange}
                         />
                         <Button
                           type="submit"
