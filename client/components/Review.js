@@ -48,8 +48,8 @@ function Review(props) {
               key={product.id /* had .name*/}
             >
               <ListItemText
-                primary={`${product.brand} Quantity ${product.quantity}`}
-                secondary={product.varietal}
+                primary={`${product.brand} x ${product.quantity}`}
+                secondary={`${product.varietal}`}
               />
               <Typography variant="body2">{`$${product.price}`}</Typography>
             </ListItem>

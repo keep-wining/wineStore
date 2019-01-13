@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography'
 import AddressForm from './AddressForm'
 import PaymentForm from './PaymentForm'
 import Review from './Review'
+import {me} from '../store/user'
+import {connect} from 'react-redux'
 
 const styles = theme => ({
   appBar: {
@@ -53,12 +55,12 @@ const styles = theme => ({
 
 const steps = ['Shipping address', 'Payment details', 'Review your order']
 
-function getStepContent(step) {
+function getStepContent(step, state1, handleChange) {
   switch (step) {
     case 0:
-      return <AddressForm />
+      return <AddressForm state={state1} handleChange={handleChange} />
     case 1:
-      return <PaymentForm />
+      return <PaymentForm state={state1} handleChange={handleChange} />
     case 2:
       return <Review />
     default:
@@ -67,11 +69,38 @@ function getStepContent(step) {
 }
 
 class Checkout extends React.Component {
-  state = {
-    activeStep: 0
+  constructor() {
+    super()
+    this.state = {
+      activeStep: 0,
+      firstName: '',
+      lastName: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
+      cardName: '',
+      cardNumber: '',
+      expDate: '',
+      cvv: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  // state = {
+  //   activeStep: 0
+  // }
+  handleChange = evt => {
+    this.setState({
+      [evt.target.id]: evt.target.value
+    })
   }
 
   handleNext = () => {
+    if (this.state.activeStep === 2) {
+      console.log(this.state)
+      console.log('send information to strip')
+    }
     this.setState(state => ({
       activeStep: state.activeStep + 1
     }))
@@ -92,7 +121,6 @@ class Checkout extends React.Component {
   render() {
     const {classes} = this.props
     const {activeStep} = this.state
-
     return (
       <React.Fragment>
         <CssBaseline />
@@ -129,7 +157,7 @@ class Checkout extends React.Component {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {getStepContent(activeStep, this.state, this.handleChange)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button
@@ -162,4 +190,14 @@ Checkout.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Checkout)
+const mapStateToProps = state => {
+  return {
+    userData: state.userReducer
+  }
+}
+
+const connectedComponent = connect(mapStateToProps, null)(
+  withStyles(styles)(Checkout)
+)
+
+export default connectedComponent
