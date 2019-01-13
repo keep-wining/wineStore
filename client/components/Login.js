@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {thunk_removeError} from '../store/user'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -64,9 +65,10 @@ class Login extends React.Component {
   }
 
   render() {
-    const {name, displayName, error, classes} = this.props
+    const {name, displayName, error, classes, removeError} = this.props
     if (error) {
-      toastr.error('unSuccessful login')
+      toastr.error('Incorrect email/password')
+      removeError()
     }
     return (
       <main className={classes.main}>
@@ -128,6 +130,9 @@ const mapDispatch = (dispatch, ownProps) => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       dispatch(auth(email, password, formName, ownProps.history))
+    },
+    removeError: () => {
+      dispatch(thunk_removeError())
     }
   }
 }

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import toastr from 'toastr'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, firstName}) => (
   <div>
     <Link to="/">
       <h1>Keep Wining</h1>
@@ -16,7 +17,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/home">Home</Link>
           <Link to="/wines/allWines">Wines</Link>
           <Link to="/checkout">Checkout</Link>
-          <Link to="/" onClick={handleClick}>
+          <Link
+            to="/"
+            onClick={() => {
+              handleClick(firstName)
+            }}
+          >
             Logout
           </Link>
         </div>
@@ -39,14 +45,16 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.userReducer.id
+    isLoggedIn: !!state.userReducer.id,
+    firstName: state.userReducer.firstName
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
+    async handleClick(firstName) {
+      await dispatch(logout())
+      toastr.success(`Goodbye ${firstName}!`)
     }
   }
 }
