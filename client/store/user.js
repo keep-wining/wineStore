@@ -1,6 +1,7 @@
 import axios from 'axios'
-import history from '../history'
+// import history from '../history'
 import AddQuantity, {uniqueItems} from './HelperFunction'
+import toastr from 'toastr'
 
 /**
  * ACTION TYPES
@@ -8,6 +9,7 @@ import AddQuantity, {uniqueItems} from './HelperFunction'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_TO_CART = 'ADD_TO_CART'
+const REMOVE_ERROR = 'REMOVE_ERROR'
 
 /**
  * INITIAL STATE
@@ -25,6 +27,7 @@ const addToCart = item => ({
   type: ADD_TO_CART,
   item
 })
+const removeError = () => ({type: REMOVE_ERROR})
 
 /**
  * THUNK CREATORS
@@ -42,6 +45,11 @@ export const auth = (email, password, method, history) => async dispatch => {
   let res
   try {
     res = await axios.post(`/auth/${method}`, {email, password})
+    if (res.data.firstName) {
+      toastr.success(`Welcome ${res.data.firstName}!`)
+    } else {
+      toastr.success(`Welcome ${res.data.email}!`)
+    }
   } catch (authError) {
     dispatch(getUser({error: authError}))
     history.push('/login')
@@ -57,7 +65,7 @@ export const auth = (email, password, method, history) => async dispatch => {
 }
 
 //firstName,lastName,zip,city,address1,address2,state
-export const authNewAccount = function(inputs) {
+export const authNewAccount = function(inputs, history) {
   return async dispatch => {
     let res
     try {
@@ -72,8 +80,15 @@ export const authNewAccount = function(inputs) {
         address2: inputs.address2,
         state: inputs.state
       })
+      if (res.data.firstName) {
+        toastr.success(`Welcome ${res.data.firstName}!`)
+      } else {
+        toastr.success(`Welcome ${res.data.email}!`)
+      }
     } catch (authError) {
-      return dispatch(getUser({error: authError}))
+      dispatch(getUser({error: authError}))
+      history.push('/signup')
+      return undefined
     }
     try {
       dispatch(getUser(res.data))
@@ -110,6 +125,10 @@ export const thunk_addToCart = (userId, item) => {
   }
 }
 
+export const thunk_removeError = () => dispatch => {
+  dispatch(removeError())
+}
+
 /**
  * REDUCER
  */
@@ -121,6 +140,9 @@ export default function(state = defaultUser, action) {
       return defaultUser
     case ADD_TO_CART:
       return {...state, cart: [action.item]}
+    case REMOVE_ERROR:
+      delete state.error
+      return state
     default:
       return state
   }

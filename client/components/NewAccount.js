@@ -1,11 +1,17 @@
 import React from 'react'
 import {authNewAccount} from '../store'
+import {thunk_removeError} from '../store/user'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import toastr from 'toastr'
 
 class NewAccount extends React.Component {
   render() {
-    const {name, displayName, handleSubmit, error} = this.props
+    const {name, displayName, handleSubmit, error, removeError} = this.props
+    if (error) {
+      toastr.error('Please fill out all required fields')
+      removeError()
+    }
     return (
       <div>
         <form onSubmit={handleSubmit} name={name}>
@@ -82,7 +88,7 @@ const mapSignup = state => {
   }
 }
 
-const mapDispatchNewAccount = dispatch => {
+const mapDispatchNewAccount = (dispatch, ownProps) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
@@ -97,19 +103,25 @@ const mapDispatchNewAccount = dispatch => {
       const address2 = evt.target.address2.value
       const state = evt.target.state.value
       dispatch(
-        authNewAccount({
-          email,
-          password,
-          formName,
-          firstName,
-          lastName,
-          zip,
-          city,
-          address1,
-          address2,
-          state
-        })
+        authNewAccount(
+          {
+            email,
+            password,
+            formName,
+            firstName,
+            lastName,
+            zip,
+            city,
+            address1,
+            address2,
+            state
+          },
+          ownProps.history
+        )
       )
+    },
+    removeError: () => {
+      dispatch(thunk_removeError())
     }
   }
 }
