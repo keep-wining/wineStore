@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
-function AddressForm() {
+function AddressForm(props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -20,6 +20,8 @@ function AddressForm() {
             label="First name"
             fullWidth
             autoComplete="fname"
+            value={props.state.firstName}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -30,6 +32,8 @@ function AddressForm() {
             label="Last name"
             fullWidth
             autoComplete="lname"
+            value={props.state.lastName}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -40,6 +44,8 @@ function AddressForm() {
             label="Address line 1"
             fullWidth
             autoComplete="billing address-line1"
+            value={props.state.address1}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12}>
@@ -49,6 +55,8 @@ function AddressForm() {
             label="Address line 2"
             fullWidth
             autoComplete="billing address-line2"
+            value={props.state.address2}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -59,6 +67,8 @@ function AddressForm() {
             label="City"
             fullWidth
             autoComplete="billing address-level2"
+            value={props.state.city}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -67,6 +77,8 @@ function AddressForm() {
             name="state"
             label="State/Province/Region"
             fullWidth
+            value={props.state.state}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -77,6 +89,8 @@ function AddressForm() {
             label="Zip / Postal code"
             fullWidth
             autoComplete="billing postal-code"
+            value={props.state.zip}
+            onChange={props.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -87,6 +101,7 @@ function AddressForm() {
             label="Country"
             fullWidth
             autoComplete="billing country"
+            value="USA"
           />
         </Grid>
         <Grid item xs={12}>
