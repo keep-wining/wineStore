@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 import AddressForm from './AddressForm'
 import PaymentForm from './PaymentForm'
 import Review from './Review'
-import {me} from '../store/user'
+import {thunk_sendToStripe} from '../store/user'
 import {connect} from 'react-redux'
 
 const styles = theme => ({
@@ -98,8 +98,11 @@ class Checkout extends React.Component {
 
   handleNext = () => {
     if (this.state.activeStep === 2) {
-      console.log(this.state)
-      console.log('send information to strip')
+      const total = this.props.userData.cart.reduce((accum, elem) => {
+        accum = accum + elem.price * elem.quantity
+        return accum
+      }, 0)
+      this.props.sendToStripe({...this.state, amount: total})
     }
     this.setState(state => ({
       activeStep: state.activeStep + 1
@@ -196,7 +199,15 @@ const mapStateToProps = state => {
   }
 }
 
-const connectedComponent = connect(mapStateToProps, null)(
+const mapDispatchToProps = dispatch => {
+  return {
+    sendToStripe: stripeData => {
+      dispatch(thunk_sendToStripe(stripeData))
+    }
+  }
+}
+
+const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(Checkout)
 )
 
