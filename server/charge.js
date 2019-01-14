@@ -10,6 +10,7 @@ router.post('/', async (req, res, next) => {
       type: 'ideal',
       amount: 1099
     })
+
     const amount = req.body.amount
     const customer = await stripe.customers.create({
       email: req.body.stripeEmail,

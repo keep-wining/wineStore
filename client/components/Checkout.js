@@ -102,8 +102,9 @@ class Checkout extends React.Component {
         accum = accum + elem.price * elem.quantity
         return accum
       }, 0)
-      this.props.sendToStripe({...this.state, amount: total})
+      //this.props.sendToStripe({...this.state, amount: total})
     }
+
     this.setState(state => ({
       activeStep: state.activeStep + 1
     }))

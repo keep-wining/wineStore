@@ -120,7 +120,8 @@ class SingleWine extends React.Component {
       <React.Fragment>
         <div>
           <CssBaseline />
-          {/* <AppBar position="static" className={classes.appBar}>
+          {/* /Optional navbar can render here: 
+          <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <CameraIcon className={classes.icon} />
             <Typography variant="h6" color="inherit" noWrap>
