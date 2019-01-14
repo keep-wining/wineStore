@@ -152,7 +152,7 @@ class AllWines extends React.Component {
                       <Typography gutterBottom variant="h6" component="h3">
                         {wine.varietal}
                       </Typography>
-                      <Typography>${wine.price}</Typography>
+                      <Typography>${wine.price / 100}</Typography>
                     </CardContent>
                     <CardActions>
                       <Link to={`/wines/${wine.id}`}>

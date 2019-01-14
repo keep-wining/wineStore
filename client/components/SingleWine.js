@@ -83,7 +83,7 @@ class SingleWine extends React.Component {
       varietal: this.props.singleWine.varietal,
       vintage: this.props.singleWine.vintage,
       description: this.props.singleWine.description,
-      price: this.props.singleWine.price,
+      price: this.props.singleWine.price / 100,
       id: this.props.singleWine.id
     })
   }
@@ -169,7 +169,7 @@ class SingleWine extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1">${price}</Typography>
+                    <Typography variant="subtitle1">${price / 100}</Typography>
                   </Grid>
                 </Grid>
               </Grid>
