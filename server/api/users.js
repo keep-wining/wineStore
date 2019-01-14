@@ -3,6 +3,9 @@ const {User} = require('../db/models')
 module.exports = router
 
 router.put('/:userId/cart', async (req, res, next) => {
+  // anyone can see everyones cart if you make a put request
+  // to this url maybe can add a password so when you are logged in
+  // only you can see it
   try {
     let oldcart = await User.findById(req.params.userId)
     let newcart
@@ -50,6 +53,8 @@ router.put('/:userId/cart', async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
+  // this will show us all our users anyone who goes to our
+  // website and types /api/users
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though

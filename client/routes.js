@@ -11,7 +11,7 @@ import {
   Checkout,
   Review
 } from './components'
-
+import {Elements} from 'react-stripe-elements'
 import {me} from './store'
 import FeaturedWines from './components/FeaturedWines'
 
@@ -33,7 +33,17 @@ class Routes extends Component {
         <Route exact path="/wines/:wineId" component={SingleWine} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={NewAccount} />
-        <Route exact path="/checkout" component={Checkout} />
+        <Route
+          exact
+          path="/checkout"
+          render={() => {
+            return (
+              <Elements>
+                <Checkout />
+              </Elements>
+            )
+          }}
+        />
         <Route exact path="/review" component={Review} />
         <Route exact path="/" component={FeaturedWines} />
         <Route exact path="/home" component={UserHome} />
