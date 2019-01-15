@@ -88,9 +88,9 @@ class SingleWine extends React.Component {
     })
   }
 
-  handleClick(evt) {
+  async handleClick(evt) {
     evt.preventDefault()
-    this.props.addToCart(this.props.user, this.state)
+    await this.props.addToCart(this.props.user, this.state)
     toastr.success(`${this.state.quantity} ${this.state.brand} added to cart!`)
   }
 
