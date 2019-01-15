@@ -82,10 +82,7 @@ class Checkout extends React.Component {
       city: '',
       state: '',
       zip: '',
-      cardName: '',
-      cardNumber: '',
-      expDate: '',
-      cvv: ''
+      token: ''
     }
     this.handleChange = this.handleChange.bind(this)
   }
@@ -104,13 +101,19 @@ class Checkout extends React.Component {
         accum = accum + elem.price * elem.quantity
         return accum
       }, 0)
-      this.props.sendToStripe({...this.state, amount: total})
+      this.props.sendToStripe({
+        ...this.state,
+        amount: total,
+        email: this.props.userData.email
+      })
     }
 
     if (this.state.activeStep === 1) {
       const response = await this.props.stripe.createToken()
       const token = response.token
-      console.log('token', token)
+      this.setState({
+        token: token.id
+      })
     }
 
     this.setState(state => ({

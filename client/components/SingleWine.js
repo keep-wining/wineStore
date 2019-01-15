@@ -83,7 +83,7 @@ class SingleWine extends React.Component {
       varietal: this.props.singleWine.varietal,
       vintage: this.props.singleWine.vintage,
       description: this.props.singleWine.description,
-      price: this.props.singleWine.price / 100,
+      price: this.props.singleWine.price,
       id: this.props.singleWine.id
     })
   }
@@ -120,7 +120,7 @@ class SingleWine extends React.Component {
       <React.Fragment>
         <div>
           <CssBaseline />
-          {/* /Optional navbar can render here: 
+          {/* /Optional navbar can render here:
           <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <CameraIcon className={classes.icon} />

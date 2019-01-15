@@ -127,7 +127,8 @@ export const thunk_addToCart = (userId, item) => {
 
 export const thunk_sendToStripe = stripeData => {
   return async dispatch => {
-    await axios.post('/charge', stripeData)
+    const response = await axios.post('/charge', stripeData)
+    console.log(response)
     const action = clearCart()
     dispatch(action)
   }
@@ -156,6 +157,16 @@ export default function(state = defaultUser, action) {
     case ADD_TO_CART:
       return {...state, cart: action.item}
     case ADD_TO_CART_GUEST:
+      let newCart = state.cart.reduce((accum, elem) => {
+        if (elem.id === action.item.id) {
+          action.item.quantity = action.item.quantity * 1 + elem.quantity * 1
+          accum.push(action.item)
+          return accum
+        }
+        accum.push(elem)
+        return accum
+      }, [])
+
       return {...state, cart: [...state.cart, action.item]}
     case REMOVE_ERROR:
       delete state.error

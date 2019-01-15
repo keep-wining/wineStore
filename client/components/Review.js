@@ -29,13 +29,14 @@ const styles = theme => ({
 
 class Review extends React.Component {
   render() {
-    const products = this.props.wine
+    let products = this.props.wine
     const user = this.props.user
     const {classes} = this.props
-    const total = products.reduce((accum, elem) => {
-      accum = accum + elem.price * elem.quantity
-      return Math.round(accum * 100) / 100
-    }, 0)
+    const total =
+      products.reduce((accum, elem) => {
+        accum = accum + elem.price * elem.quantity
+        return accum
+      }, 0) / 100
 
     return (
       <React.Fragment>
@@ -53,7 +54,8 @@ class Review extends React.Component {
                   primary={`${product.brand} x ${product.quantity}`}
                   secondary={`${product.varietal}`}
                 />
-                <Typography variant="body2">{`$${product.price}`}</Typography>
+                <Typography variant="body2">{`$${product.price /
+                  100}`}</Typography>
               </ListItem>
             )
           })}
