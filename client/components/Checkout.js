@@ -190,9 +190,9 @@ class Checkout extends React.Component {
             </React.Fragment>
           </Paper>
           <CardElement
-            test={(() => {
-              console.log(props)
-            })()}
+          // test={(() => {
+          //   console.log(props)
+          // })()}
           />
         </main>
       </React.Fragment>
