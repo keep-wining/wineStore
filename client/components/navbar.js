@@ -7,9 +7,11 @@ import toastr from 'toastr'
 
 const Navbar = ({handleClick, isLoggedIn, firstName}) => (
   <div>
-    <Link to="/">
-      <h1>Keep Wining</h1>
-    </Link>
+    <div className="navh1">
+      <Link to="/">
+        <h1>Keep Wining</h1>
+      </Link>
+    </div>
     <nav>
       {isLoggedIn ? (
         <div>
