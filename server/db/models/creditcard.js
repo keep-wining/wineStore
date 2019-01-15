@@ -1,9 +1,11 @@
 const db = require('../db')
 const Sequelize = require('sequelize')
 
+// OB/LM: watch out storing sensitive data
 const CreditCard = db.define(
   'creditcard',
   {
+    // OB/LM: inconsistent naming convention
     UserName: {
       type: Sequelize.STRING,
       allowNull: false
@@ -21,6 +23,7 @@ const CreditCard = db.define(
       allowNull: false
     }
   },
+  // OB/LM: this might help, it might be unnecessary
   {schema: 'private'}
 )
 

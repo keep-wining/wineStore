@@ -96,6 +96,7 @@ class Checkout extends React.Component {
   }
 
   handleNext = async () => {
+    // OB/LM: could use the URL bar instead
     if (this.state.activeStep === 2) {
       const total = this.props.userData.cart.reduce((accum, elem) => {
         accum = accum + elem.price * elem.quantity
@@ -216,6 +217,18 @@ const mapStateToProps = state => {
   }
 }
 
+// OB/LM: can use object format for `mapDispatchToProps` when it is of the format:
+/*
+const mapDispatchToProps = dispatch => {
+  return {
+    someMethod: () => dispatch(someActionCreator())
+  }
+}
+So starndard that react-redux allows you to do a shorthand:
+const mapDispatchToProps = {
+  someMethod: someActionCreator
+};
+*/
 const mapDispatchToProps = dispatch => {
   return {
     sendToStripe: stripeData => {
