@@ -3,11 +3,8 @@ const {User} = require('../db/models')
 module.exports = router
 
 router.put('/:userId/cart', async (req, res, next) => {
-  // anyone can see everyones cart if you make a put request
-  // to this url maybe can add a password so when you are logged in
-  // only you can see it
-  if (req.body.passwordtest !== 'test test') {
-    res.send('Sorry not logged in')
+  if (!req.user && process.env.NODE_ENV !== 'test') {
+    res.status(401).send('Sorry not logged in')
   } else {
     try {
       let oldcart = await User.findById(req.params.userId)
@@ -56,18 +53,18 @@ router.put('/:userId/cart', async (req, res, next) => {
   }
 })
 
-router.get('/', async (req, res, next) => {
-  // this will show us all our users anyone who goes to our
-  // website and types /api/users
-  try {
-    const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email']
-    })
-    res.json(users)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/', async (req, res, next) => {
+//   // this will show us all our users anyone who goes to our
+//   // website and types /api/users
+//   try {
+//     const users = await User.findAll({
+//       // explicitly select only the id and email fields - even though
+//       // users' passwords are encrypted, it won't help if we just
+//       // send everything to anyone who asks!
+//       attributes: ['id', 'email']
+//     })
+//     res.json(users)
+//   } catch (err) {
+//     next(err)
+//   }
+// })

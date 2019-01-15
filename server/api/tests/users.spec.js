@@ -11,24 +11,25 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
-  describe('Tests all users route', () => {
+  describe('Tests single user cart', () => {
     const userCody = {
       firstName: 'Cody',
       lastName: 'Pug',
-      email: 'cody@puppybook.com'
+      email: 'cody@puppybook.com',
+      cart: [{id: 1}, {id: 2}]
     }
 
     beforeEach(() => {
       return User.create(userCody)
     })
 
-    it('GET /api/users', async () => {
+    it('PUT /api/users/:userId/cart', async () => {
       const res = await request(app)
-        .get('/api/users')
+        .put('/api/users/1/cart', {id: 3})
         .expect(200)
-
+      console.log(res)
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal('cody@puppybook.com')
+      expect(res.body.length).to.be.equal(3)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
