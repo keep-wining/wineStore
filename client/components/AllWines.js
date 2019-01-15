@@ -80,14 +80,14 @@ class AllWines extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
+        {/* <AppBar position="static" className={classes.appBar}> */}
+        {/* <Toolbar>
             <CameraIcon className={classes.icon} />
             <Typography variant="h6" color="inherit" noWrap>
               Wine Store
             </Typography>
-          </Toolbar>
-        </AppBar>
+          </Toolbar> */}
+        {/* </AppBar> */}
         <main>
           {/* Hero unit */}
           <div className={classes.heroUnit}>
