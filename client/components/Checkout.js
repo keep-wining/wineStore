@@ -15,6 +15,8 @@ import PaymentForm from './PaymentForm'
 import Review from './Review'
 import {thunk_sendToStripe} from '../store/user'
 import {connect} from 'react-redux'
+import {Elements} from 'react-stripe-elements'
+import {injectStripe} from 'react-stripe-elements'
 
 const styles = theme => ({
   appBar: {
@@ -102,8 +104,11 @@ class Checkout extends React.Component {
         accum = accum + elem.price * elem.quantity
         return accum
       }, 0)
-      //this.props.sendToStripe({...this.state, amount: total})
+      this.props.sendToStripe({...this.state, amount: total})
     }
+    // this.props.stripe.createToken().then(r => {
+    //   console.log(r, 'blbhabdf')
+    // })
 
     this.setState(state => ({
       activeStep: state.activeStep + 1
@@ -212,4 +217,4 @@ const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(
   withStyles(styles)(Checkout)
 )
 
-export default connectedComponent
+export default injectStripe(connectedComponent)

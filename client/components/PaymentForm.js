@@ -4,24 +4,21 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import {injectStripe} from 'react-stripe-elements'
 
 function PaymentForm(props) {
   console.log(props)
-  props.stripe
-    .createToken('bank_account', {
-      country: 'US',
-      currency: 'usd',
-      routing_number: '110000000',
-      account_number: '000123456789',
-      account_holder_name: 'Jenny Rosen',
-      account_holder_type: 'individual'
-    })
-    .then(result => {
-      console.log(result)
-    })
-
-  //props.stripe.createToken({name: 'john doe'}).then(token => console.log(token))
+  // props.stripe
+  //   .createToken('bank_account', {
+  //     country: 'US',
+  //     currency: 'usd',
+  //     routing_number: '110000000',
+  //     account_number: '000123456789',
+  //     account_holder_name: 'Jenny Rosen',
+  //     account_holder_type: 'individual'
+  //   })
+  //   .then(result => {
+  //     console.log(result)
+  //   })
 
   return (
     <React.Fragment>
@@ -81,4 +78,4 @@ function PaymentForm(props) {
   )
 }
 
-export default injectStripe(PaymentForm)
+export default PaymentForm

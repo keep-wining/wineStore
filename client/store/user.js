@@ -115,6 +115,7 @@ export const logout = () => async dispatch => {
 export const thunk_addToCart = (userId, item) => {
   return async dispatch => {
     if (userId) {
+      item.passwordtest = 'test test'
       item.quantity = item.quantity * 1
       const response = await axios.put(`/api/users/${userId}/cart`, item)
       const action = addToCart(response.data)
