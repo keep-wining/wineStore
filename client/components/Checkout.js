@@ -15,8 +15,7 @@ import PaymentForm from './PaymentForm'
 import Review from './Review'
 import {thunk_sendToStripe} from '../store/user'
 import {connect} from 'react-redux'
-import {Elements} from 'react-stripe-elements'
-import {injectStripe} from 'react-stripe-elements'
+import {CardElement, injectStripe} from 'react-stripe-elements'
 
 const styles = theme => ({
   appBar: {
@@ -62,7 +61,8 @@ function getStepContent(step, state1, handleChange) {
     case 0:
       return <AddressForm state={state1} handleChange={handleChange} />
     case 1:
-      return <PaymentForm state={state1} handleChange={handleChange} />
+      return <CardElement />
+    //<PaymentForm state={state1} handleChange={handleChange} />
     case 2:
       return <Review />
     default:
@@ -98,7 +98,7 @@ class Checkout extends React.Component {
     })
   }
 
-  handleNext = () => {
+  handleNext = async () => {
     if (this.state.activeStep === 2) {
       const total = this.props.userData.cart.reduce((accum, elem) => {
         accum = accum + elem.price * elem.quantity
@@ -106,9 +106,12 @@ class Checkout extends React.Component {
       }, 0)
       this.props.sendToStripe({...this.state, amount: total})
     }
-    // this.props.stripe.createToken().then(r => {
-    //   console.log(r, 'blbhabdf')
-    // })
+
+    if (this.state.activeStep === 1) {
+      const response = await this.props.stripe.createToken()
+      const token = response.token
+      console.log('token', token)
+    }
 
     this.setState(state => ({
       activeStep: state.activeStep + 1
@@ -189,6 +192,11 @@ class Checkout extends React.Component {
               )}
             </React.Fragment>
           </Paper>
+          {/* <CardElement
+          // test={(() => {
+          //   console.log(props)
+          // })()}
+          /> */}
         </main>
       </React.Fragment>
     )

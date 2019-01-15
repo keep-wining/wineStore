@@ -83,14 +83,14 @@ class SingleWine extends React.Component {
       varietal: this.props.singleWine.varietal,
       vintage: this.props.singleWine.vintage,
       description: this.props.singleWine.description,
-      price: this.props.singleWine.price,
+      price: this.props.singleWine.price / 100,
       id: this.props.singleWine.id
     })
   }
 
-  handleClick(evt) {
+  async handleClick(evt) {
     evt.preventDefault()
-    this.props.addToCart(this.props.user, this.state)
+    await this.props.addToCart(this.props.user, this.state)
     toastr.success(`${this.state.quantity} ${this.state.brand} added to cart!`)
   }
 
@@ -120,7 +120,8 @@ class SingleWine extends React.Component {
       <React.Fragment>
         <div>
           <CssBaseline />
-          {/* <AppBar position="static" className={classes.appBar}>
+          {/* /Optional navbar can render here: 
+          <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <CameraIcon className={classes.icon} />
             <Typography variant="h6" color="inherit" noWrap>
@@ -169,7 +170,7 @@ class SingleWine extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1">${price}</Typography>
+                    <Typography variant="subtitle1">${price / 100}</Typography>
                   </Grid>
                 </Grid>
               </Grid>

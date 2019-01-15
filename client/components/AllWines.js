@@ -80,14 +80,14 @@ class AllWines extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
+        {/* <AppBar position="static" className={classes.appBar}> */}
+        {/* <Toolbar>
             <CameraIcon className={classes.icon} />
             <Typography variant="h6" color="inherit" noWrap>
               Wine Store
             </Typography>
-          </Toolbar>
-        </AppBar>
+          </Toolbar> */}
+        {/* </AppBar> */}
         <main>
           {/* Hero unit */}
           <div className={classes.heroUnit}>
@@ -152,7 +152,7 @@ class AllWines extends React.Component {
                       <Typography gutterBottom variant="h6" component="h3">
                         {wine.varietal}
                       </Typography>
-                      <Typography>${wine.price}</Typography>
+                      <Typography>${wine.price / 100}</Typography>
                     </CardContent>
                     <CardActions>
                       <Link to={`/wines/${wine.id}`}>

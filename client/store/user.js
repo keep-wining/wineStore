@@ -9,15 +9,9 @@ import toastr from 'toastr'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const ADD_TO_CART = 'ADD_TO_CART'
+const ADD_TO_CART_GUEST = 'ADD_TO_CART_GUEST'
 const REMOVE_ERROR = 'REMOVE_ERROR'
 const CLEAR_CART = 'CLEAR_CART'
-
-/**
- * INITIAL STATE
- */
-const defaultUser = {
-  cart: []
-}
 
 /**
  * ACTION CREATORS
@@ -26,6 +20,10 @@ const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 const addToCart = item => ({
   type: ADD_TO_CART,
+  item
+})
+const addToCartGuest = item => ({
+  type: ADD_TO_CART_GUEST,
   item
 })
 const removeError = () => ({type: REMOVE_ERROR})
@@ -121,10 +119,7 @@ export const thunk_addToCart = (userId, item) => {
       const action = addToCart(response.data)
       dispatch(action)
     } else {
-      const action = addToCart({
-        type: ADD_TO_CART,
-        item
-      })
+      const action = addToCartGuest(item)
       dispatch(action)
     }
   }
@@ -143,6 +138,13 @@ export const thunk_removeError = () => dispatch => {
 }
 
 /**
+ * INITIAL STATE
+ */
+const defaultUser = {
+  cart: []
+}
+
+/**
  * REDUCER
  */
 export default function(state = defaultUser, action) {
@@ -152,7 +154,9 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case ADD_TO_CART:
-      return {...state, cart: [action.item]}
+      return {...state, cart: action.item}
+    case ADD_TO_CART_GUEST:
+      return {...state, cart: [...state.cart, action.item]}
     case REMOVE_ERROR:
       delete state.error
       return state

@@ -1,12 +1,13 @@
 /* global describe beforeEach afterEach it */
 
 import {expect} from 'chai'
-import {getAllWines} from './wine'
+import {thunk_gotAllWines} from '../wine'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import configureMockStore from 'redux-mock-store'
 import thunkMiddleware from 'redux-thunk'
-import history from '../history'
+const middlewares = [thunkMiddleware]
+const mockStore = configureMockStore(middlewares)
 
 const wineTest = [
   {
@@ -31,3 +32,37 @@ const wineTest = [
       'https://yspimages-yoursurprisecom.netdna-ssl.com/articleimage/67/670aba5d20cf37e7c8b8306843cb2baa/belvy-red-with-printed-label_small.jpg'
   }
 ]
+
+describe('thunk creators', () => {
+  let store
+  let mockAxios
+
+  const initialState = {allWines: []}
+
+  beforeEach(() => {
+    mockAxios = new MockAdapter(axios)
+    store = mockStore(initialState)
+  })
+
+  afterEach(() => {
+    mockAxios.restore()
+    store.clearActions()
+  })
+
+  describe('all wines', () => {
+    it('eventually dispatches the GET_ALL_WINES action', async () => {
+      const fakeWines = wineTest
+      mockAxios.onGet('/api/wines/allWines').replyOnce(200, fakeWines)
+      await store.dispatch(thunk_gotAllWines())
+      const actions = store.getActions()
+      expect(actions[0].type).to.be.equal('GET_ALL_WINES')
+    })
+    it('returns array of all wines', async () => {
+      const fakeWines = wineTest
+      mockAxios.onGet('/api/wines/allWines').replyOnce(200, fakeWines)
+      await store.dispatch(thunk_gotAllWines())
+      const actions = store.getActions()
+      expect(actions[0].allWines.length).to.be.equal(2)
+    })
+  })
+})

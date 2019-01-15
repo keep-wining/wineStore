@@ -27,75 +27,78 @@ const styles = theme => ({
   }
 })
 
-function Review(props) {
-  const products = props.wine
-  const user = props.user
-  const {classes} = props
-  const total = products.reduce((accum, elem) => {
-    accum = accum + elem.price * elem.quantity
-    return accum
-  }, 0)
-  return (
-    <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Order summary
-      </Typography>
-      <List disablePadding>
-        {products.map(product => {
-          return (
-            <ListItem
-              className={classes.listItem}
-              key={product.id /* had .name*/}
-            >
-              <ListItemText
-                primary={`${product.brand} x ${product.quantity}`}
-                secondary={`${product.varietal}`}
-              />
-              <Typography variant="body2">{`$${product.price}`}</Typography>
-            </ListItem>
-          )
-        })}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            {'$' + total}
-          </Typography>
-        </ListItem>
-      </List>
-      <Grid container spacing={16}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
-          </Typography>
-          <Typography gutterBottom>{`${user.firstName} ${
-            user.lastName
-          }`}</Typography>
-          <Typography gutterBottom>{`${user.address1}, ${user.address2}, ${
-            user.city
-          }, ${user.state}`
-          /* addresses.join(', ') */
-          }</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
-          </Typography>
-          <Grid container>
-            {payments.map(payment => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+class Review extends React.Component {
+  render() {
+    const products = this.props.wine
+    const user = this.props.user
+    const {classes} = this.props
+    const total = products.reduce((accum, elem) => {
+      accum = accum + elem.price * elem.quantity
+      return Math.round(accum * 100) / 100
+    }, 0)
+
+    return (
+      <React.Fragment>
+        <Typography variant="h6" gutterBottom>
+          Order summary
+        </Typography>
+        <List disablePadding>
+          {products.map(product => {
+            return (
+              <ListItem
+                className={classes.listItem}
+                key={product.id /* had .name*/}
+              >
+                <ListItemText
+                  primary={`${product.brand} x ${product.quantity}`}
+                  secondary={`${product.varietal}`}
+                />
+                <Typography variant="body2">{`$${product.price}`}</Typography>
+              </ListItem>
+            )
+          })}
+          <ListItem className={classes.listItem}>
+            <ListItemText primary="Total" />
+            <Typography variant="subtitle1" className={classes.total}>
+              {'$' + total}
+            </Typography>
+          </ListItem>
+        </List>
+        <Grid container spacing={16}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6" gutterBottom className={classes.title}>
+              Shipping
+            </Typography>
+            <Typography gutterBottom>{`${user.firstName} ${
+              user.lastName
+            }`}</Typography>
+            <Typography gutterBottom>{`${user.address1}, ${user.address2}, ${
+              user.city
+            }, ${user.state}`
+            /* addresses.join(', ') */
+            }</Typography>
+          </Grid>
+          <Grid item container direction="column" xs={12} sm={6}>
+            <Typography variant="h6" gutterBottom className={classes.title}>
+              Payment details
+            </Typography>
+            <Grid container>
+              {payments.map(payment => (
+                <React.Fragment key={payment.name}>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>{payment.name}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>{payment.detail}</Typography>
+                  </Grid>
+                </React.Fragment>
+              ))}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </React.Fragment>
-  )
+      </React.Fragment>
+    )
+  }
 }
 
 Review.propTypes = {
