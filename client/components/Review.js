@@ -54,15 +54,18 @@ class Review extends React.Component {
                   primary={`${product.brand} x ${product.quantity}`}
                   secondary={`${product.varietal}`}
                 />
-                <Typography variant="body2">{`$${product.price /
-                  100}`}</Typography>
+                <Typography variant="body2">{`$${(
+                  product.price *
+                  product.quantity /
+                  100
+                ).toFixed(2)}`}</Typography>
               </ListItem>
             )
           })}
           <ListItem className={classes.listItem}>
             <ListItemText primary="Total" />
             <Typography variant="subtitle1" className={classes.total}>
-              {'$' + total}
+              {'$' + total.toFixed(2)}
             </Typography>
           </ListItem>
         </List>
