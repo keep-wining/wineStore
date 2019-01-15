@@ -6,49 +6,53 @@ router.put('/:userId/cart', async (req, res, next) => {
   // anyone can see everyones cart if you make a put request
   // to this url maybe can add a password so when you are logged in
   // only you can see it
-  try {
-    let oldcart = await User.findById(req.params.userId)
-    let newcart
-    if (oldcart.cart.length > 0) {
-      newcart = oldcart.cart.reduce((accum, elem) => {
-        if (elem.id === req.body.id) {
-          req.body.quantity = req.body.quantity + elem.quantity
-          accum.push(req.body)
-          return accum
-        }
-        accum.push(elem)
-        return accum
-      }, [])
-      if (
-        newcart.reduce((accum, elem) => {
-          if (req.body.id === elem.id) {
+  if (req.body.passwordtest !== 'test test') {
+    res.send('Sorry not logged in')
+  } else {
+    try {
+      let oldcart = await User.findById(req.params.userId)
+      let newcart
+      if (oldcart.cart.length > 0) {
+        newcart = oldcart.cart.reduce((accum, elem) => {
+          if (elem.id === req.body.id) {
+            req.body.quantity = req.body.quantity + elem.quantity
             accum.push(req.body)
             return accum
           }
+          accum.push(elem)
           return accum
-        }, []).length === 0
-      ) {
-        newcart.push(req.body)
+        }, [])
+        if (
+          newcart.reduce((accum, elem) => {
+            if (req.body.id === elem.id) {
+              accum.push(req.body)
+              return accum
+            }
+            return accum
+          }, []).length === 0
+        ) {
+          newcart.push(req.body)
+        }
+      } else {
+        newcart = [req.body]
       }
-    } else {
-      newcart = [req.body]
-    }
-    await User.update(
-      {
-        cart: newcart
-      },
-      {
-        where: {
-          id: req.params.userId
+      await User.update(
+        {
+          cart: newcart
         },
+        {
+          where: {
+            id: req.params.userId
+          },
 
-        returning: true,
-        plain: true
-      }
-    )
-    res.send(newcart)
-  } catch (err) {
-    next(err)
+          returning: true,
+          plain: true
+        }
+      )
+      res.send(newcart)
+    } catch (err) {
+      next(err)
+    }
   }
 })
 

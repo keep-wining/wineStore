@@ -61,7 +61,8 @@ function getStepContent(step, state1, handleChange) {
     case 0:
       return <AddressForm state={state1} handleChange={handleChange} />
     case 1:
-      return <PaymentForm state={state1} handleChange={handleChange} />
+      return <CardElement />
+    //<PaymentForm state={state1} handleChange={handleChange} />
     case 2:
       return <Review />
     default:
@@ -103,12 +104,14 @@ class Checkout extends React.Component {
         accum = accum + elem.price * elem.quantity
         return accum
       }, 0)
-      //this.props.sendToStripe({...this.state, amount: total})
+      this.props.sendToStripe({...this.state, amount: total})
     }
 
-    const response = await this.props.stripe.createToken()
-    const token = response.token
-    console.log('token', token.card.id)
+    if (this.state.activeStep === 1) {
+      const response = await this.props.stripe.createToken()
+      const token = response.token
+      console.log('token', token)
+    }
 
     this.setState(state => ({
       activeStep: state.activeStep + 1
@@ -189,11 +192,11 @@ class Checkout extends React.Component {
               )}
             </React.Fragment>
           </Paper>
-          <CardElement
+          {/* <CardElement
           // test={(() => {
           //   console.log(props)
           // })()}
-          />
+          /> */}
         </main>
       </React.Fragment>
     )

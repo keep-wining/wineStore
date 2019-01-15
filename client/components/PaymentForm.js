@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import {injectStripe} from 'react-stripe-elements'
 
 function PaymentForm(props) {
   return (
@@ -65,4 +64,4 @@ function PaymentForm(props) {
   )
 }
 
-export default injectStripe(PaymentForm)
+export default PaymentForm
