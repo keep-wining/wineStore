@@ -34,6 +34,7 @@ export const thunk_purchase = order => async dispatch => {
 }
 
 // INITIAL STATE
+// OB/LM: this seems like it doesn't need to be nested, could just be cart
 const initialState = {
   cart: []
 }

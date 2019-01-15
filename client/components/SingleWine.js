@@ -17,6 +17,7 @@ import ButtonBase from '@material-ui/core/ButtonBase'
 import InputBase from '@material-ui/core/InputBase'
 import Input from '@material-ui/core/Input'
 
+// OB/LM: think about reusability
 const styles = theme => ({
   appBar: {
     position: 'relative'
@@ -76,6 +77,7 @@ class SingleWine extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
   async componentDidMount() {
+    // OB/LM: looks like this logic should also happen in `componentDidUpdate` (and detect change in wineId)
     const wineId = this.props.match.params.wineId
     await this.props.getSingleWine(wineId)
     this.setState({

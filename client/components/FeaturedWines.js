@@ -136,6 +136,7 @@ class FeaturedWines extends React.Component {
                       <Typography gutterBottom variant="h6" component="h3">
                         {wine.varietal}
                       </Typography>
+                      {/* OB/LM: use (num).toFixed(2) */}
                       <Typography>${wine.price / 100}</Typography>
                     </CardContent>
                     <CardActions>

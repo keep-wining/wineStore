@@ -1,6 +1,7 @@
 import axios from 'axios'
 // import history from '../history'
 import AddQuantity, {uniqueItems} from './HelperFunction'
+// OB/LM: might want to prune some of the unnecessary dependencies related to toastr (script, node module toastr, node module react-toastr)
 import toastr from 'toastr'
 
 /**
@@ -128,6 +129,7 @@ export const thunk_addToCart = (userId, item) => {
 export const thunk_sendToStripe = stripeData => {
   return async dispatch => {
     const response = await axios.post('/charge', stripeData)
+    // OB/LM: rotten log
     console.log(response)
     const action = clearCart()
     dispatch(action)

@@ -41,6 +41,7 @@ describe('Wine model', () => {
   })
 
   describe('Checks on model definition', () => {
+    // OB/LM: this tests the sequelize library more than your code
     it('includes `brand`, `varietal`, `vintage`, and `color` fields', () => {
       return wine.save().then(savedWine => {
         expect(savedWine.brand).to.equal('Fullstack Vineyards')
@@ -52,6 +53,7 @@ describe('Wine model', () => {
 
     it('requires `brand`', () => {
       wine.brand = null
+      // OB/LM: you could look into chai-as-promised, could shorten this code to something like `expect(wine.validate()).to.eventually.be.rejected()`
       return wine.validate().then(
         () => {
           throw new Error('validation should fail when brand is null')
