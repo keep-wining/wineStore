@@ -3,26 +3,22 @@ const keySecret = process.env.SECRET_KEY
 const stripe = require('stripe')(keySecret)
 
 router.post('/', async (req, res, next) => {
-  console.log(req.body)
-
   try {
-    const source = await stripe.createSource({
-      type: 'ideal',
-      amount: 1099
-    })
-
-    const amount = req.body.amount
     const customer = await stripe.customers.create({
-      email: req.body.stripeEmail,
-      source: req.body.stripeToken
+      email: req.body.email
     })
-    const charge = await stripe.charges.create({
-      amount,
-      description: 'Sample Charge',
+    const source = await stripe.customers.createSource(customer.id, {
+      source: req.body.token
+    })
+    console.log(source)
+    let {status} = await stripe.charges.create({
+      amount: req.body.amount,
       currency: 'usd',
-      customer: customer.id
+      description: 'An example charge',
+      source: source
     })
-    console.log('charge: ', charge)
+    console.log('charge: ', status)
+    res.json(status)
   } catch (error) {
     next(error)
   }
