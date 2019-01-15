@@ -136,7 +136,7 @@ class FeaturedWines extends React.Component {
                       <Typography gutterBottom variant="h6" component="h3">
                         {wine.varietal}
                       </Typography>
-                      <Typography>${wine.price / 100}</Typography>
+                      <Typography>${(wine.price / 100).toFixed(2)}</Typography>
                     </CardContent>
                     <CardActions>
                       <Link to={`/wines/${wine.id}`}>

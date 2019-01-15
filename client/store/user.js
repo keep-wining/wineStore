@@ -4,6 +4,13 @@ import AddQuantity, {uniqueItems} from './HelperFunction'
 import toastr from 'toastr'
 
 /**
+ * INITIAL STATE
+ */
+const defaultUser = {
+  cart: []
+}
+
+/**
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
@@ -66,7 +73,6 @@ export const auth = (email, password, method, history) => async dispatch => {
   }
 }
 
-//firstName,lastName,zip,city,address1,address2,state
 export const authNewAccount = function(inputs, history) {
   return async dispatch => {
     let res
@@ -127,8 +133,7 @@ export const thunk_addToCart = (userId, item) => {
 
 export const thunk_sendToStripe = stripeData => {
   return async dispatch => {
-    const response = await axios.post('/charge', stripeData)
-    console.log(response)
+    await axios.post('/charge', stripeData)
     const action = clearCart()
     dispatch(action)
   }
@@ -139,15 +144,36 @@ export const thunk_removeError = () => dispatch => {
 }
 
 /**
- * INITIAL STATE
+ * GUEST CART HELPER FUNCTION
  */
-const defaultUser = {
-  cart: []
+
+const guestCartUpdate = (pastCart, newItem) => {
+  let bool = false
+  let update
+  let index
+  pastCart.map((item, idx) => {
+    if (item.id === newItem.id) {
+      update = {
+        ...newItem,
+        quantity: Number(item.quantity) + Number(newItem.quantity)
+      }
+      bool = true
+      index = idx
+    }
+  })
+  if (bool === true) {
+    pastCart.splice(index, 1, update)
+    return pastCart
+  } else {
+    pastCart.push(newItem)
+    return pastCart
+  }
 }
 
 /**
  * REDUCER
  */
+
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
@@ -156,18 +182,10 @@ export default function(state = defaultUser, action) {
       return defaultUser
     case ADD_TO_CART:
       return {...state, cart: action.item}
-    case ADD_TO_CART_GUEST:
-      let newCart = state.cart.reduce((accum, elem) => {
-        if (elem.id === action.item.id) {
-          action.item.quantity = action.item.quantity * 1 + elem.quantity * 1
-          accum.push(action.item)
-          return accum
-        }
-        accum.push(elem)
-        return accum
-      }, [])
-
-      return {...state, cart: [...state.cart, action.item]}
+    case ADD_TO_CART_GUEST: {
+      let newCart = guestCartUpdate(state.cart, action.item)
+      return {...state, cart: [...newCart]}
+    }
     case REMOVE_ERROR:
       delete state.error
       return state
