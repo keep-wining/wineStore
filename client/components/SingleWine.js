@@ -92,6 +92,7 @@ class SingleWine extends React.Component {
     evt.preventDefault()
     await this.props.addToCart(this.props.user, this.state)
     toastr.success(`${this.state.quantity} ${this.state.brand} added to cart!`)
+    this.setState({quantity: 1})
   }
 
   handleChange(evt) {
@@ -170,7 +171,9 @@ class SingleWine extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1">${price / 100}</Typography>
+                    <Typography variant="subtitle1">
+                      ${(price / 100).toFixed(2)}
+                    </Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -213,6 +216,9 @@ const mapDispatchToProps = dispatch => {
     },
     addToCart: (userId, item) => {
       return dispatch(thunk_addToCart(userId, item))
+    },
+    addToCartGuest: item => {
+      return dispatch(thunk_addToCartGuest(item))
     }
   }
 }
