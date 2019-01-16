@@ -15,12 +15,17 @@ nav a {
   margin: 1em;
 }
 
+nav {
+  background-color: rgb(199, 194, 194);
+}
+
 .navh1 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-size: 30px;
   letter-spacing: 2px;
   word-spacing: 2px;
+  text-align: center;
 }
 
 form div {
