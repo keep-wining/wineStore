@@ -15,7 +15,7 @@ export const UserHome = props => {
   } else {
     welcome = 'Hello, guest!'
   }
-  //
+
   return (
     <div>
       <h3>{welcome}</h3>

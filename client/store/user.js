@@ -1,6 +1,4 @@
 import axios from 'axios'
-// import history from '../history'
-import AddQuantity, {uniqueItems} from './HelperFunction'
 import toastr from 'toastr'
 
 /**

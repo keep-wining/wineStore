@@ -4,18 +4,13 @@ import {thunk_gotSingleWine} from '../store/wine'
 import {Link} from 'react-router-dom'
 import {thunk_addToCart} from '../store/user'
 import PropTypes from 'prop-types'
-import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
-import CameraIcon from '@material-ui/icons/PhotoCamera'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import ButtonBase from '@material-ui/core/ButtonBase'
-import InputBase from '@material-ui/core/InputBase'
-import Input from '@material-ui/core/Input'
 
 const styles = theme => ({
   appBar: {
@@ -121,15 +116,6 @@ class SingleWine extends React.Component {
       <React.Fragment>
         <div>
           <CssBaseline />
-          {/* /Optional navbar can render here:
-          <AppBar position="static" className={classes.appBar}>
-          <Toolbar>
-            <CameraIcon className={classes.icon} />
-            <Typography variant="h6" color="inherit" noWrap>
-              Wine Store
-            </Typography>
-          </Toolbar>
-        </AppBar> */}
           <div className={classes.root}>
             <Paper className={classes.paper}>
               <Grid container spacing={16}>

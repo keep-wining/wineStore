@@ -11,16 +11,12 @@ import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import AddressForm from './AddressForm'
-import PaymentForm from './PaymentForm'
 import Review from './Review'
 import {thunk_sendToStripe} from '../store/user'
 import {connect} from 'react-redux'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 
 const styles = theme => ({
-  appBar: {
-    position: 'relative'
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing.unit * 2,
@@ -62,7 +58,6 @@ function getStepContent(step, state1, handleChange) {
       return <AddressForm state={state1} handleChange={handleChange} />
     case 1:
       return <CardElement />
-    //<PaymentForm state={state1} handleChange={handleChange} />
     case 2:
       return <Review />
     default:
@@ -86,9 +81,7 @@ class Checkout extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
   }
-  // state = {
-  //   activeStep: 0
-  // }
+
   handleChange = evt => {
     this.setState({
       [evt.target.id]: evt.target.value
@@ -139,13 +132,6 @@ class Checkout extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="absolute" color="default" className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>
-              Wine Store
-            </Typography>
-          </Toolbar>
-        </AppBar>
         <main className={classes.layout}>
           <Paper className={classes.paper}>
             <Typography component="h1" variant="h4" align="center">

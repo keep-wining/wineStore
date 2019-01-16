@@ -46,10 +46,7 @@ class Review extends React.Component {
         <List disablePadding>
           {products.map(product => {
             return (
-              <ListItem
-                className={classes.listItem}
-                key={product.id /* had .name*/}
-              >
+              <ListItem className={classes.listItem} key={product.id}>
                 <ListItemText
                   primary={`${product.brand} x ${product.quantity}`}
                   secondary={`${product.varietal}`}
@@ -120,4 +117,3 @@ const mapStateToProps = state => {
 const connectReview = connect(mapStateToProps, null)(withStyles(styles)(Review))
 
 export default connectReview
-//withStyles(styles)(Review)

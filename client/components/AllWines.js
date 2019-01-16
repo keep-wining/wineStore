@@ -4,16 +4,13 @@ import {connect} from 'react-redux'
 import {thunk_gotAllWines} from '../store/wine'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
-import CameraIcon from '@material-ui/icons/PhotoCamera'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
-import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 
@@ -54,7 +51,7 @@ const styles = theme => ({
     flexDirection: 'column'
   },
   cardMedia: {
-    paddingTop: '56.25%' // 16:9
+    paddingTop: '56.25%'
   },
   cardContent: {
     flexGrow: 1
@@ -80,16 +77,7 @@ class AllWines extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        {/* <AppBar position="static" className={classes.appBar}> */}
-        {/* <Toolbar>
-            <CameraIcon className={classes.icon} />
-            <Typography variant="h6" color="inherit" noWrap>
-              Wine Store
-            </Typography>
-          </Toolbar> */}
-        {/* </AppBar> */}
         <main>
-          {/* Hero unit */}
           <div className={classes.heroUnit}>
             <div className={classes.heroContent}>
               <Typography
@@ -114,13 +102,6 @@ class AllWines extends React.Component {
               <div className={classes.heroButtons}>
                 <Grid container spacing={16} justify="center">
                   <Grid item>
-                    <Link to="/signup">
-                      <Button variant="contained" color="primary">
-                        Sign Up
-                      </Button>
-                    </Link>
-                  </Grid>
-                  <Grid item>
                     <Link to="/review">
                       <Button variant="outlined" color="primary">
                         View Cart
@@ -132,7 +113,6 @@ class AllWines extends React.Component {
             </div>
           </div>
           <div className={classNames(classes.layout, classes.cardGrid)}>
-            {/* End hero unit */}
             <Grid container spacing={40}>
               {wines.map(wine => (
                 <Grid item key={wine.id} sm={6} md={4} lg={3}>
@@ -160,9 +140,6 @@ class AllWines extends React.Component {
                           View
                         </Button>
                       </Link>
-                      <Button size="small" color="primary">
-                        Add to Cart
-                      </Button>
                     </CardActions>
                   </Card>
                 </Grid>
@@ -172,9 +149,11 @@ class AllWines extends React.Component {
         </main>
         {/* Footer */}
         <footer className={classes.footer}>
-          <Typography variant="h6" align="center" gutterBottom>
-            About Us
-          </Typography>
+          <Link to="/about">
+            <Typography variant="h6" align="center" gutterBottom>
+              About Us
+            </Typography>
+          </Link>
           <Typography
             variant="subtitle1"
             align="center"
