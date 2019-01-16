@@ -9,7 +9,8 @@ import {
   AllWines,
   NewAccount,
   Checkout,
-  Review
+  Review,
+  About
 } from './components'
 import {Elements} from 'react-stripe-elements'
 import {me} from './store'
@@ -32,6 +33,7 @@ class Routes extends Component {
         <Route exact path="/wines/allWines" component={AllWines} />
         <Route exact path="/wines/:wineId" component={SingleWine} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/about" component={About} />
         <Route exact path="/signup" component={NewAccount} />
         <Route
           exact
@@ -55,6 +57,7 @@ class Routes extends Component {
             <Route exact path="/checkout" component={Checkout} />
             <Route exact path="/review" component={Review} />
             <Route exact path="/home" component={UserHome} />
+            <Route exact path="/about" component={About} />
           </Switch>
         )}
       </Switch>
