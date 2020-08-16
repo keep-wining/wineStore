@@ -148,9 +148,11 @@ class FeaturedWines extends React.Component {
         </main>
         {/* Footer */}
         <footer className={classes.footer}>
-          <Typography variant="h6" align="center" gutterBottom>
-            About Us
-          </Typography>
+          <Link to="/about">
+            <Typography variant="h6" align="center" gutterBottom>
+              About Us
+            </Typography>
+          </Link>
           <Typography
             variant="subtitle1"
             align="center"

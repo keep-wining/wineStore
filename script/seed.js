@@ -8,11 +8,6 @@ async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  // const users = await Promise.all([
-  //   User.create({email: 'cody@email.com', password: '123'}),
-  //   User.create({email: 'murphy@email.com', password: '123'})
-  // ])
-
   const wineData = [
     {
       brand: 'Cloud Break',
@@ -261,6 +256,7 @@ async function seed() {
       zip: 93402,
       city: 'Los Osos',
       address1: '123 LOVR',
+      address2: 'Unit C',
       state: 'CA'
     },
     {
@@ -299,6 +295,7 @@ async function seed() {
       zip: 93405,
       city: 'San Luis Obispo',
       address1: '321 Cherry Ln',
+      address2: 'Apt 10',
       state: 'CA'
     },
     {
@@ -311,6 +308,7 @@ async function seed() {
       zip: 93402,
       city: 'Los Osos',
       address1: '999 Bear Ln',
+      address2: 'Apt 3A',
       state: 'CA'
     }
   ]

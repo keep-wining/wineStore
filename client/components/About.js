@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   icon: {
@@ -75,19 +76,17 @@ const About = props => {
       </div>
       <div>
         <footer className={classes.footer}>
-          <Typography variant="h6" align="center" gutterBottom>
-            Browse our complete list of wines:
-          </Typography>
-          <Link to="/wines/allWines">
-            <Typography
-              variant="subtitle1"
-              align="center"
-              color="textSecondary"
-              component="p"
-            >
-              View All Wines
-            </Typography>
-          </Link>
+          <div className={classes.heroButtons}>
+            <Grid container spacing={16} justify="center">
+              <Grid item>
+                <Link to="/wines/allWines">
+                  <Button variant="contained" color="primary">
+                    View our full selection of wines
+                  </Button>
+                </Link>
+              </Grid>
+            </Grid>
+          </div>
         </footer>
       </div>
     </React.Fragment>
